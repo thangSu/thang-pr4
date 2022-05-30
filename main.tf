@@ -1,10 +1,9 @@
 provider "aws" {
   region = "us-east-1"
 }
-resource "aws_iam_role" "ir" {
-  name = "accessreadHCL"
-  
-  policy = aws_iam_policy.ip.id
+resource "aws_iam_user_policy_attachment" "attachment" {
+  user       = aws_iam_user.iu.name
+  policy_arn = aws_iam_policy.ip.arn
 }
 
 resource "aws_iam_policy" "ip" {
