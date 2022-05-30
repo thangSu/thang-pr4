@@ -4,7 +4,7 @@ provider "aws" {
 resource "aws_iam_role" "ir" {
   name = "accessreadHCL"
   
-  assume_role_policy = aws_iam_policy.ip.id
+  policy = aws_iam_policy.ip.id
 }
 
 resource "aws_iam_policy" "ip" {
