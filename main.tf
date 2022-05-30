@@ -1,25 +1,30 @@
 provider "aws" {
   region = "us-east-1"
 }
-data "aws_iam_policy_document" "instance-assume-role-policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
 
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::704063666843:user/"]
-    }
-  }
-}
-resource "aws_iam_user_policy_attachment" "attachment" {
-  user       = aws_iam_user.iu.name
-  policy_arn = aws_iam_policy.ip.arn
-}
+
 resource "aws_iam_role" "example" {
   name                = "UpdateApp"
-  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
+  assume_role_policy = jsonencode(
+  {
+    "Version": "2012-10-17"
+    "Statement":[
+      {
+        "Effect":"Allow",
+        "Principal":{
+          "AWS": "704063666843"
+        },
+        "Action": "sts:AssumeRole",
+        "Condition":{}
+      }
+    ]
+  }
+  )
   managed_policy_arns = [aws_iam_policy.ip.arn]
 }
+
+
+
 resource "aws_iam_policy" "ip" {
     name = "accessread"
     path = "/"
