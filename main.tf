@@ -7,7 +7,7 @@ resource "aws_iam_user_policy_attachment" "attachment" {
 }
 
 resource "aws_iam_policy" "ip" {
-    name = "access"
+    name = "access read"
     path = "/"
     description = "access to S3 bucket"
 
