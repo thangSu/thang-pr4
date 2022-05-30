@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::704063666843:root"]
+      identifiers = ["arn:aws:iam::704063666843:user/"]
     }
   }
 }
