@@ -1,6 +1,16 @@
 provider "aws" {
   region = "us-east-1"
 }
+data "aws_iam_policy_document" "instance-assume-role-policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::704063666843:root"]
+    }
+  }
+}
 resource "aws_iam_user_policy_attachment" "attachment" {
   user       = aws_iam_user.iu.name
   policy_arn = aws_iam_policy.ip.arn
@@ -50,8 +60,8 @@ resource "aws_iam_user" "iu" {
     path = "/system/"
 }
 resource "aws_iam_user_policy" "lb_ro" {
-  name = "test"
-  user = aws_iam_user.lb.name
+  name = "accessS3user"
+  user = aws_iam_user.iu.name
 
   policy = <<EOF
 {
