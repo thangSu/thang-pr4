@@ -1,25 +1,36 @@
 provider "aws" {
   region = "us-east-1"
 }
+locals {
+  map= {
+    "id1"={
+      type = "AWS"
+      identifiers = ["704063666843"],
+    }
+     "id2"={
+      type = "AWS"
+      identifiers = ["704063666843"],
+    }
+  }
+}
 
+data "aws_iam_policy_document" "ip_document" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    dynamic "principals" {
+      for_each = local.map
+      content {
+        type        = principals.value.type
+        identifiers = principals.value.identifiers
+      } 
+    }
+  }
+}
 
 resource "aws_iam_role" "example" {
   name                = "UpdateApp"
-  assume_role_policy = jsonencode(
-  {
-    "Version": "2012-10-17"
-    "Statement":[
-      {
-        "Effect":"Allow",
-        "Principal":{
-          "AWS": "704063666843"
-        },
-        "Action": "sts:AssumeRole",
-        "Condition":{}
-      }
-    ]
-  }
-  )
+  assume_role_policy = data.ip_document.json
   managed_policy_arns = [aws_iam_policy.ip.arn]
 }
 
