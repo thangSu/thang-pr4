@@ -9,7 +9,7 @@ locals {
     }
      "id2"={
       type = "AWS"
-      identifiers = ["704063666843"],
+      identifiers = ["878103297030"],
     }
   }
 }
@@ -30,7 +30,7 @@ data "aws_iam_policy_document" "ip_document" {
 
 resource "aws_iam_role" "example" {
   name                = "UpdateApp"
-  assume_role_policy = data.ip_document.json
+  assume_role_policy = data.aws_iam_policy_document.ip_document.json
   managed_policy_arns = [aws_iam_policy.ip.arn]
 }
 
