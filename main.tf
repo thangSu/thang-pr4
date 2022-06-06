@@ -18,6 +18,7 @@ locals {
       identifiers = ["878103297030"],
     }
     }
+    
      statement_dynamic = {
     "1" ={
        actions = ["s3:ListAllMyBuckets",]
@@ -77,7 +78,7 @@ resource "aws_iam_policy" "ip" {
     path = "/"
     description = "access to S3 bucket"
 
-    policy = data.aws_iam_policy_document.ip_document2
+    policy = data.aws_iam_policy_document.ip_document2.json
 }
 
 resource "aws_iam_user" "iu" {
