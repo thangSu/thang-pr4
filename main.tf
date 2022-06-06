@@ -21,20 +21,20 @@ locals {
      statement_dynamic = {
     "1" ={
        actions = ["s3:ListAllMyBuckets",]
-       Effect = "Allow"
+       effect = "Allow"
        resources = ["*",]
     }
     "2" ={
        actions = [ "s3:ListBucket",
                 "s3:GetBucketLocation",]
-        Effect = "Allow"
+        effect = "Allow"
        resources = ["arn:aws:s3:::${var.bucket_name}",]
     }
     "3" ={
        actions = [  "s3:GetObject",
                 "s3:PutObject",
                 "s3:DeleteObject",]
-        Effect = "Allow"
+        effect = "Allow"
        resources = ["arn:aws:s3:::${var.bucket_name}/*",]
     }
     }
@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "ip_document2" {
 
     content{
       actions = statement.value.actions
-      Effect = statement.value.Effect
+      effect = statement.value.effect
       resources = statement.value.resources
     }
   }
