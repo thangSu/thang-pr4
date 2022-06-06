@@ -3,13 +3,15 @@ provider "aws" {
 }
 locals {
   map= {
-    "id1"={
+    ip_dynamic= {
+       "id1"={
       type = "AWS"
       identifiers = ["704063666843"],
     }
      "id2"={
       type = "AWS"
       identifiers = ["878103297030"],
+    }
     }
   }
 }
@@ -19,7 +21,7 @@ data "aws_iam_policy_document" "ip_document" {
     actions = ["sts:AssumeRole"]
 
     dynamic "principals" {
-      for_each = local.map
+      for_each = local.map.ip_dynamic
       content {
         type        = principals.value.type
         identifiers = principals.value.identifiers
@@ -33,7 +35,6 @@ resource "aws_iam_role" "example" {
   assume_role_policy = data.aws_iam_policy_document.ip_document.json
   managed_policy_arns = [aws_iam_policy.ip.arn]
 }
-
 
 
 resource "aws_iam_policy" "ip" {
