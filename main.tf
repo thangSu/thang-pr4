@@ -17,7 +17,8 @@ locals {
       type = "AWS"
       identifiers = ["878103297030"],
     }
-    statement_dynamic={
+    }
+     statement_dynamic = {
     "1" ={
        actions = ["s3:ListAllMyBuckets",]
        Effect = "Allow"
@@ -35,7 +36,6 @@ locals {
                 "s3:DeleteObject",]
         Effect = "Allow"
        resources = ["arn:aws:s3:::${var.bucket_name}/*",]
-    }
     }
     }
   }
