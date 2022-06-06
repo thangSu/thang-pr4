@@ -8,6 +8,7 @@ variable "bucket_name" {
 
 locals {
   map= {
+    //princilpals
     princilpals_dynamic = {
     "1"={
       type = "AWS"
@@ -18,7 +19,7 @@ locals {
       identifiers = ["878103297030"],
     }
     }
-    
+    //statement
      statement_dynamic = {
     "1" ={
        actions = ["s3:ListAllMyBuckets",]
@@ -95,7 +96,7 @@ resource "aws_iam_user_policy" "lb_ro" {
     "Statement": {
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
-      "Resource": "arn:aws:iam::704063666843:role/ThangUpdateApp"
+      "Resource": "arn:aws:iam::878103297030:role/ThangUpdateApp"
     }
   }
 EOF
